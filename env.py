@@ -13,7 +13,6 @@ class PadmACustomEnv(gym.Env):
             np.array([2, 2]),
             np.array([3, 3])
         ]        
-        self.teleport_position = np.array({1,3})
 
         self.goal_state = np.array([4,4])
         self.action_space = gym.spaces.Discrete(4)
@@ -43,7 +42,8 @@ class PadmACustomEnv(gym.Env):
         for obs in self.obstacles:
             if np.array_equal(self.agent_state, obs):
                 print("⚠️ Obstacle hit! Teleporting...")
-                self.agent_state = self.teleport_position.copy()
+                self.agent_state[0] = 0
+                self.agent_state[1] = 0
                 break
 
         done = np.array_equal(self.agent_state,self.goal_state)
