@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 
 class PadmACustomEnv(gym.Env):
-    def __init__(self, grid_size=5):
+    def __init__(self, grid_size=15):
         super().__init__()
         self.grid_size = grid_size
         self.agent_state = np.array([1,1])
