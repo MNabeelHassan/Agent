@@ -93,13 +93,3 @@ if __name__ == "__main__":
             print("Bruhhhhhhhh!!!!!! I reached the destination. Stop pestering me.")
             break
     env.close()
-
-# Ideas
-## Snake and Ladder Game
-## Here there is only snake, unless you have time for ladder
-## So the idea is that snakes are the obstacles
-## The agent goes through the grid and tries to reach the goal
-## The snake will have a head and a tail
-## Everytime the agent goes to the head of the snake, it will go down
-## to the tail of snake and remember where the head was and try to avoid it 
-## When trying to climb up the grid
