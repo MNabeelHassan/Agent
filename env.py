@@ -1,11 +1,14 @@
 import  gymnasium as gym
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
-from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
-snake_img = mpimg.imread("snake.jpeg")  
-imagebox = OffsetImage(snake_img, zoom=0.03)  
+
+def draw_snake(ax, center, length=1.0, segments=30):
+    x0, y0 = center
+    t = np.linspace(0, 2 * np.pi, segments)
+    x = x0 + 0.4 * np.cos(t) * np.sin(2 * t)
+    y = y0 + 0.4 * np.sin(t) * np.cos(2 * t)
+    ax.plot(x, y, color='green', linewidth=2)
 
 class PadmACustomEnv(gym.Env):
     def __init__(self, grid_size=15):
@@ -65,10 +68,8 @@ class PadmACustomEnv(gym.Env):
     def render(self):
         self.ax.clear()
 
-        # Draw obstacles (snake)
         for obs in self.obstacles:
-            ab = AnnotationBbox(imagebox, (obs[0], obs[1]), frameon=False)
-            self.ax.add_artist(ab)
+            draw_snake(self.ax, obs)
 
         self.ax.plot(self.agent_state[0], self.agent_state[1], "ro")
         self.ax.plot(self.goal_state[0], self.goal_state[1], "g+")
