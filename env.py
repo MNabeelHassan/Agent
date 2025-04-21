@@ -1,7 +1,11 @@
 import  gymnasium as gym
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
+snake_img = mpimg.imread("snake.jpeg")  
+imagebox = OffsetImage(snake_img, zoom=0.03)  
 
 class PadmACustomEnv(gym.Env):
     def __init__(self, grid_size=15):
@@ -63,7 +67,8 @@ class PadmACustomEnv(gym.Env):
 
         # Draw obstacles (snake)
         for obs in self.obstacles:
-            self.ax.plot(obs[0], obs[1], "ks", markersize=10)
+            ab = AnnotationBbox(imagebox, (obs[0], obs[1]), frameon=False)
+            self.ax.add_artist(ab)
 
         self.ax.plot(self.agent_state[0], self.agent_state[1], "ro")
         self.ax.plot(self.goal_state[0], self.goal_state[1], "g+")
