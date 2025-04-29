@@ -32,7 +32,7 @@ class PadmACustomEnv(gym.Env):
             [np.array([10, 10]), np.array([10, 11]), np.array([11, 11]), np.array([11,12])]    # Snake 3
         ]      
 
-        self.goal_state = np.array([0,14])
+        self.goal_state = np.array([14,14])
         self.action_space = gym.spaces.Discrete(4)
         self.observationobservation_space = gym.spaces.Box(low=0, high=self.grid_size, shape=(2,))
         self.fig, self.ax = plt.subplots()
