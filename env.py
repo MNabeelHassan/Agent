@@ -65,7 +65,7 @@ class PadmACustomEnv(gym.Env):
         for snake in self.obstacles:
             for obs in snake:
                 if np.array_equal(self.agent_state, obs):
-                    print("⚠️ Snake bite! Back to start.")
+                    print("⚠️ Snake bite! Sssssss!")
                     reward -= 5
                     self.agent_state[0] = snake[0][0]
                     self.agent_state[1] = snake[0][1]
