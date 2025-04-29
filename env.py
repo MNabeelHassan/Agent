@@ -28,7 +28,8 @@ class PadmACustomEnv(gym.Env):
         
         self.obstacles = [
             [np.array([2, 2]), np.array([2, 3]), np.array([3, 3]), np.array([3,4])],   # Snake 1
-            [np.array([10, 10]), np.array([10, 11]), np.array([11, 11]), np.array([11,12])]    # Snake 2
+                [np.array([9, 4]), np.array([9, 5]), np.array([10, 5]), np.array([10,6])],   # Snake 2
+            [np.array([10, 10]), np.array([10, 11]), np.array([11, 11]), np.array([11,12])]    # Snake 3
         ]      
 
         self.goal_state = np.array([0,14])
