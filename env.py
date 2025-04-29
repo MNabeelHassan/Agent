@@ -61,8 +61,8 @@ class PadmACustomEnv(gym.Env):
             for obs in snake:
                 if np.array_equal(self.agent_state, obs):
                     print("⚠️ Snake bite! Back to start.")
-                    self.agent_state[0] = 0
-                    self.agent_state[1] = 0
+                    self.agent_state[0] = snake[0][0]
+                    self.agent_state[1] = snake[0][1]
                     break
 
         done = np.array_equal(self.agent_state,self.goal_state)
