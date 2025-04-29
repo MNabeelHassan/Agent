@@ -28,8 +28,13 @@ class PadmACustomEnv(gym.Env):
         
         self.obstacles = [
             [np.array([2, 2]), np.array([2, 3]), np.array([3, 3]), np.array([3,4])],   # Snake 1
-                [np.array([9, 4]), np.array([9, 5]), np.array([10, 5]), np.array([10,6])],   # Snake 2
-            [np.array([10, 10]), np.array([10, 11]), np.array([11, 11]), np.array([11,12])]    # Snake 3
+            [np.array([6, 1]), np.array([6, 2]), np.array([7, 2]), np.array([7, 3])],   # Snake 2
+            [np.array([10, 6]), np.array([10, 7]), np.array([11, 7]), np.array([11, 8])],  # Snake 3
+            [np.array([4, 10]), np.array([5, 10]), np.array([5, 11]), np.array([6, 11])],  # Snake 4
+            [np.array([12, 2]), np.array([12, 3]), np.array([13, 3]), np.array([13, 4])],  # Snake 5
+            [np.array([1, 13]), np.array([2, 13]), np.array([2, 14]), np.array([3, 14])],  # Snake 6
+            [np.array([8, 12]), np.array([8, 13]), np.array([9, 13]), np.array([9, 14])],  # Snake 7
+            [np.array([5, 5]), np.array([5, 6]), np.array([6, 6]), np.array([6, 7])],  # Snake 8
         ]      
 
         self.goal_state = np.array([14,14])
@@ -61,6 +66,7 @@ class PadmACustomEnv(gym.Env):
             for obs in snake:
                 if np.array_equal(self.agent_state, obs):
                     print("⚠️ Snake bite! Back to start.")
+                    reward -= 5
                     self.agent_state[0] = snake[0][0]
                     self.agent_state[1] = snake[0][1]
                     break
@@ -98,7 +104,7 @@ class PadmACustomEnv(gym.Env):
 if __name__ == "__main__":
     env = PadmACustomEnv()
     state = env.reset()
-    for _ in range(500):
+    for _ in range(5000):
         action = env.action_space.sample()
         print(action)
         state, reward, done, info = env.step(action)
