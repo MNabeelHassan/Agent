@@ -1,6 +1,7 @@
 import  gymnasium as gym
 import numpy as np
 import matplotlib.pyplot as plt
+import random
 
 
 def draw_snake(ax, center, length=1.5, segments=100):
@@ -24,7 +25,9 @@ class PadmACustomEnv(gym.Env):
     def __init__(self, grid_size=15):
         super().__init__()
         self.grid_size = grid_size
-        self.agent_state = np.array([1,1])
+        rand_x = random.randint(1,14)
+        rand_y = random.randint(1,14)
+        self.agent_state = np.array([rand_x,rand_y])
         
         self.obstacles = [
             [np.array([2, 2]), np.array([2, 3]), np.array([3, 3]), np.array([3,4])],   # Snake 1
@@ -43,7 +46,9 @@ class PadmACustomEnv(gym.Env):
         self.fig, self.ax = plt.subplots()
 
     def reset(self):
-        self.agent_state = np.array([1,1])
+        rand_x = random.randint(1,14)
+        rand_y = random.randint(1,14)
+        self.agent_state = np.array([rand_x,rand_y])
         return self.agent_state
 
     def step(self, action):
@@ -63,10 +68,15 @@ class PadmACustomEnv(gym.Env):
 
         # Check for obstacle collision using np.array_equal
         for snake in self.obstacles:
-            for obs in snake:
+            for idx, obs in enumerate(snake):
                 if np.array_equal(self.agent_state, obs):
                     print("⚠️ Snake bite! Sssssss!")
-                    reward -= 5
+                    if idx == 3:
+                        reward -= 5  # Head of the snake
+                        print("Hit the head! Big penalty.")
+                    else:
+                        reward -= 1  # Body of the snake
+                        print("Hit the body. Small penalty.")
                     self.agent_state[0] = snake[0][0]
                     self.agent_state[1] = snake[0][1]
                     break
@@ -103,14 +113,27 @@ class PadmACustomEnv(gym.Env):
 
 if __name__ == "__main__":
     env = PadmACustomEnv()
-    state = env.reset()
-    for _ in range(5000):
-        action = env.action_space.sample()
-        print(action)
-        state, reward, done, info = env.step(action)
-        env.render()
-        print(f"State: {state}, Reward: {reward}, Action: {action}, Done:{done}, Info: {info}")
-        if done:
-            print("Bruhhhhhhhh!!!!!! I reached the destination. Stop pestering me.")
-            break
+
+    num_episodes = 10
+    max_steps_per_episode = 500
+
+    for episode in range(num_episodes):
+        state = env.reset()
+        done = False
+        step = 0
+
+        print(f"\n Starting Episode {episode + 1}")
+
+        while not done and step < max_steps_per_episode:        
+            action = env.action_space.sample()
+            print(action)
+            state, reward, done, info = env.step(action)
+            env.render()
+            print(f"State: {state}, Reward: {reward}, Action: {action}, Done: {done}, Info: {info}")
+            step += 1
+            if done:
+                print("Bruhhhhhhhh!!!!!! I reached the destination. Stop pestering me.")
+                break
+        
+        print(f"Episode {episode + 1} finished after {step} steps.")
     env.close()
