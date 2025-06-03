@@ -111,6 +111,24 @@ class PadmACustomEnv(gym.Env):
     def close(self):
         plt.close()
 
+def create_env(grid_size=15):
+    """
+    Creates and returns an instance of PadmACustomEnv.
+
+    Parameters:
+    -----------
+    grid_size : int
+        The size of the grid (default is 15).
+
+    Returns:
+    --------
+    env : PadmACustomEnv
+        An instance of your custom environment.
+    """
+    env = PadmACustomEnv(grid_size=grid_size)
+    return env
+
+
 if __name__ == "__main__":
     env = PadmACustomEnv()
 
