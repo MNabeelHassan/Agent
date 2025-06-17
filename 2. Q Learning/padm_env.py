@@ -42,17 +42,17 @@ class PadmACustomEnv(gym.Env):
 
         self.goal_state = np.array([14,14])
         self.action_space = gym.spaces.Discrete(4)
-        self.observationobservation_space = gym.spaces.Box(low=0, high=self.grid_size, shape=(2,))
+        self.observation_space = gym.spaces.Box(low=0, high=self.grid_size - 1, shape=(2,))
         self.fig, self.ax = plt.subplots()
 
     def reset(self):
         rand_x = random.randint(1,14)
         rand_y = random.randint(1,14)
         self.agent_state = np.array([rand_x,rand_y])
-        return self.agent_state
+        return self.agent_state, {}
 
     def step(self, action):
-        if action == 0 and self.agent_state[1] < self.grid_size: # up
+        if action == 0 and self.agent_state[1] < self.grid_size - 1: # up
             self.agent_state[1] += 1
         
         elif action == 1 and self.agent_state[1] > 0: # down
@@ -61,7 +61,7 @@ class PadmACustomEnv(gym.Env):
         elif action == 2 and self.agent_state[0] > 0: # left
             self.agent_state[0] -= 1
 
-        elif action == 3 and self.agent_state[0] < self.grid_size: # right
+        elif action == 3 and self.agent_state[0] < self.grid_size - 1: # right
             self.agent_state[0] += 1
         
         reward = 0
@@ -111,22 +111,29 @@ class PadmACustomEnv(gym.Env):
     def close(self):
         plt.close()
 
-def create_env(grid_size=15):
-    """
-    Creates and returns an instance of PadmACustomEnv.
+def create_env(grid_size=15,
+               goal_coordinates=(14, 14),
+               hell_state_coordinates=None,
+               random_initialization=True):
 
-    Parameters:
-    -----------
-    grid_size : int
-        The size of the grid (default is 15).
+    class CustomEnv(PadmACustomEnv):
+        def __init__(self):
+            super().__init__(grid_size=grid_size)
+            self.goal_state = np.array(goal_coordinates)
+            self.random_init = random_initialization
+            if hell_state_coordinates:
+                self.hell_states = [np.array(h) for h in hell_state_coordinates]
 
-    Returns:
-    --------
-    env : PadmACustomEnv
-        An instance of your custom environment.
-    """
-    env = PadmACustomEnv(grid_size=grid_size)
-    return env
+        def reset(self, *, seed=None, options=None):
+            if self.random_init:
+                x = random.randint(1, self.grid_size - 1)
+                y = random.randint(1, self.grid_size - 1)
+                self.agent_state = np.array([x, y])
+            else:
+                self.agent_state = np.array([0, 0])
+            return self.agent_state.copy(), {}
+
+    return CustomEnv()
 
 
 if __name__ == "__main__":
