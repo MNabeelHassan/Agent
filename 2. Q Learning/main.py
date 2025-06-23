@@ -21,19 +21,17 @@ epsilon_min = 0.1  # Minimum exploration rate
 epsilon_decay = 0.995  # Decay rate for exploration
 no_episodes = 1_000  # Number of episodes
 
-goal_coordinates = (14, 14)
-
 env = create_env(
-    goal_coordinates=goal_coordinates,
+    goal_coordinates=(14, 14),
     random_initialization=True
 )
 
+goal_coordinates = tuple(env.goal_state)
 hell_state_coordinates = [
-    (int(cell[0]), int(cell[1]))
+    tuple(cell)
     for snake in env.obstacles
     for cell in snake
 ]
-
 
 # Execute:
 if train:

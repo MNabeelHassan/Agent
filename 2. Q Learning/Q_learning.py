@@ -68,8 +68,12 @@ def visualize_q_table(hell_state_coordinates=[(2, 1), (0, 4)],
             # ------------------------------------------------
             mask = np.zeros_like(heatmap_data, dtype=bool)
             mask[goal_coordinates] = True
-            mask[hell_state_coordinates[0]] = True
-            mask[hell_state_coordinates[1]] = True
+            for h in hell_state_coordinates:
+                if 0 <= h[0] < heatmap_data.shape[0] and 0 <= h[1] < heatmap_data.shape[1]:
+                    mask[h] = True
+                    ax.text(h[1] + 0.5, h[0] + 0.5, 'H', color='red',
+                            ha='center', va='center', weight='bold', fontsize=14)
+
 
             sns.heatmap(heatmap_data, annot=True, fmt=".2f", cmap="viridis",
                         ax=ax, cbar=False, mask=mask, annot_kws={"size": 9})
