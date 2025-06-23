@@ -2,6 +2,7 @@
 # --------
 from padm_env import create_env
 from Q_learning import train_q_learning, visualize_q_table
+from datetime import datetime
 
 # User definitions:
 # -----------------
@@ -20,6 +21,9 @@ epsilon = 1.0  # Exploration rate
 epsilon_min = 0.1  # Minimum exploration rate
 epsilon_decay = 0.995  # Decay rate for exploration
 no_episodes = 1_000  # Number of episodes
+
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+q_table_filename = f"q_table_lr{learning_rate}_eps{epsilon}_gamma{gamma}_{timestamp}.npy"
 
 env = create_env(
     goal_coordinates=(14, 14),
@@ -43,12 +47,12 @@ if train:
         epsilon_decay=epsilon_decay,
         alpha=learning_rate,
         gamma=gamma,
-        q_table_save_path="q_table.npy"
+        q_table_save_path=f"./2. Q Learning/{q_table_filename}"
     )
 
 if visualize_results:
     visualize_q_table(
         hell_state_coordinates=hell_state_coordinates,
         goal_coordinates=goal_coordinates,
-        q_values_path="q_table.npy"
+        q_values_path=f"./2. Q Learning/{q_table_filename}"
     )
