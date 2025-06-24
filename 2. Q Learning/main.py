@@ -30,7 +30,7 @@ q_table_filename = f"q_table_lr{learning_rate}_eps{epsilon}_gamma{gamma}_{timest
 
 env = create_env(
     goal_coordinates=(14, 14),
-    random_initialization=True
+    random_initialization=False
 )
 
 goal_coordinates = tuple(env.goal_state)
