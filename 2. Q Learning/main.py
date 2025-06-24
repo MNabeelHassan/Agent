@@ -3,10 +3,13 @@
 from padm_env import create_env
 from Q_learning import train_q_learning, visualize_q_table
 from datetime import datetime
+import numpy as np
+import time
 
 # User definitions:
 # -----------------
-train = True
+train = False
+test = True
 visualize_results = True
 
 """
@@ -37,6 +40,28 @@ hell_state_coordinates = [
     for cell in snake
 ]
 
+def test_agent(env, q_table_path, max_steps=500, delay=0.2):
+    q_table = np.load(q_table_path)
+    state, _ = env.reset()
+    state = tuple(state)
+    total_reward = 0
+
+    for step in range(max_steps):
+        action = np.argmax(q_table[state])
+        next_state, reward, done, _ = env.step(action)
+        env.render()
+        time.sleep(delay)
+
+        total_reward += reward
+        state = tuple(next_state)
+
+        if done:
+            print(f"Episode finished in {step+1} steps. Total reward: {total_reward}")
+            break
+
+    env.close()
+
+
 # Execute:
 if train:
     train_q_learning(
@@ -49,6 +74,9 @@ if train:
         gamma=gamma,
         q_table_save_path=f"./2. Q Learning/{q_table_filename}"
     )
+
+if test:
+    test_agent(env, q_table_path=f"./2. Q Learning/q_table_lr0.01_eps1.0_gamma0.99_20250624_090720.npy")
 
 if visualize_results:
     visualize_q_table(
