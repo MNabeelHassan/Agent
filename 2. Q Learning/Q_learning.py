@@ -58,7 +58,8 @@ def visualize_q_table(hell_state_coordinates=[(2, 1), (0, 4)],
 
         # Create subplots for each action:
         # --------------------------------
-        _, axes = plt.subplots(1, 4, figsize=(20, 5))
+        fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+        axes = axes.flatten()
 
         for i, action in enumerate(actions):
             ax = axes[i]
