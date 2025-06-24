@@ -75,9 +75,9 @@ def visualize_q_table(hell_state_coordinates=[(2, 1), (0, 4)],
                     ax.text(h[1] + 0.5, h[0] + 0.5, 'H', color='red',
                             ha='center', va='center', weight='bold', fontsize=14)
 
-
             sns.heatmap(heatmap_data, annot=True, fmt=".2f", cmap="viridis",
                         ax=ax, cbar=False, mask=mask, annot_kws={"size": 9})
+            ax.invert_yaxis()
 
             # Denote Goal and Hell states:
             # ----------------------------
