@@ -48,7 +48,7 @@ def train_q_learning(env, no_episodes, epsilon, epsilon_min, epsilon_decay,
 # -----------
 def visualize_q_table(hell_state_coordinates=[(2, 1), (0, 4)],
                       goal_coordinates=(4, 4),
-                      actions=["Up", "Down", "Right", "Left"],
+                      actions=["Right" , "Left", "Down", "Up"],
                       q_values_path="q_table.npy"):
 
     # Load the Q-table:

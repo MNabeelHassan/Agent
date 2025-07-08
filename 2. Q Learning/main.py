@@ -76,7 +76,7 @@ if train:
     )
 
 if test:
-    test_agent(env, q_table_path=f"./2. Q Learning/q_table_lr0.01_eps1.0_gamma0.99_20250624_090720.npy")
+    test_agent(env, q_table_path=f"./b-q_table_lr0.01_eps1.0_gamma0.99_20250704_024036.npy")
 
 if visualize_results:
     visualize_q_table(
